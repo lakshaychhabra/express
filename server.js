@@ -4,7 +4,6 @@ var app = express()
 var bodyParser = require('body-parser')
 var student = require('./models/studentSchema')
 var books = require('./models/bookSchema.js')
-var status = require('./models/status')
 var mongoose = require('mongoose')
 mongoose.connect('mongodb://admin:admin@ds151202.mlab.com:51202/library')
 
@@ -12,7 +11,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({
 extended:true
 }));
-var firstName,lastName,rNumber,pNumber,bIssued;
+//All Post Routes Starts Here
 app.post('/student',function(req,res){
     firstName = req.body.fName;
     lastName = req.body.lName;
@@ -43,12 +42,16 @@ app.post('/book',function(req,res){
     Author = req.body.author;
     BookId = req.body.bookId;
     Edition = req.body.edition;
+    DateOfIssue = req.body.dateOfIssue;
+    IssuedTo = req.body.issuedTo;
 
 var bookInfo = new books({
        name : Name,
 	   author : Author,
 	   bookId: BookId,
 	   edition: Edition,
+	   dateOfIssue : DateOfIssue,
+       issuedTo    : IssuedTo
 	});
 bookInfo.save(function(err,data)
 {
@@ -63,29 +66,10 @@ bookInfo.save(function(err,data)
         
 });
 
-app.post('/status',function(req,res){
-    DateOfIssue = req.body.dateOfIssue;
-    IssuedTo = req.body.issuedTo;
-   
-
-var statusInfo = new status({
-       dateOfIssue : DateOfIssue,
-       issuedTo    : IssuedTo
-	   
-	});
-statusInfo.save(function(err,data)
-{
-	if(err){
-		console.log(err)
-	}
-	else{
-		console.log("status updated")
-	}
-	res.json(data);
-})
-        
+app.get('/bookissue',function(req,res){
+          
+  
 });
-
 
 app.listen(port,function() {
 	console.log('server is running at 3000')
