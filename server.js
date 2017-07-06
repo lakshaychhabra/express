@@ -67,7 +67,10 @@ bookInfo.save(function(err,data)
 });
 
 app.get('/bookissue',function(req,res){
-          
+          name1 = req.body.name,
+	rollNumber1 = req.body.rNumber;
+	books.update({name:name1};{issuedTo:rollNumber1,status:false});
+
   
 });
 
